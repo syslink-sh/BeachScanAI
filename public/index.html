@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BeachScanAI</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="hero">
+        <div class="hero-content">
+          <h1>BeachScanAI</h1>
+          <p class="subtitle">Advanced AI-powered beach cleanliness analysis. Fast, accurate, and continuously improving.</p>
+          <div class="feature-banner">
+            <span class="badge">AI 2.0</span>
+            <span class="text">Our AI models are continuously learning and improving over time</span>
+          </div>
+          <ul class="steps">
+            <li><span>1</span> Upload photos</li>
+            <li><span>2</span> We find trash</li>
+            <li><span>3</span> See the score</li>
+          </ul>
+          <div class="tabs">
+            <button id="tab-scan" class="tab active" type="button">Scan</button>
+            <button id="tab-settings" class="tab" type="button">Settings</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="page-scan" class="panel callout">
+        <form id="analyze-form">
+          <div class="field">
+            <label for="file-input">Upload Images</label>
+            <div id="dropzone" class="dropzone" tabindex="0" aria-label="Drop images here or click to choose">
+              <div class="dropzone-inner">
+                <div class="dropzone-icon">📷</div>
+                <div class="dropzone-text">
+                  <strong>Drag & drop</strong> images here or
+                  <button type="button" id="choose-files" class="file-button">Choose Files</button>
+                </div>
+                <div id="file-count" class="file-count">No files selected</div>
+              </div>
+              <input id="file-input" name="files" type="file" multiple accept="image/*" />
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="confidence-slider">
+              <div class="confidence-header">
+                <label for="rt-min-confidence">Detection Confidence</label>
+                <div class="rt-value" id="rt-min-confidence-value">0.10</div>
+              </div>
+              <input id="rt-min-confidence" type="range" min="0" max="1" step="0.01" value="0.1" />
+              <input type="hidden" id="min-confidence" value="0.1" />
+              <input type="hidden" id="concurrency" value="5" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="analyze-btn">
+              <span class="analyze-icon">📊</span>
+              <span class="analyze-text">Analyze Images</span>
+            </button>
+            <div id="status" class="status" aria-live="polite"></div>
+          </div>
+        </form>
+      </section>
+
+      <section id="summary" class="summary hidden"></section>
+
+      <section id="stats" class="stats hidden">
+        <div class="stat">
+          <div class="stat-title">Overall Cleanliness</div>
+          <div class="stat-value" id="stat-cleanliness">–</div>
+          <div class="stat-desc" id="stat-overall-label">–</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Images</div>
+          <div class="stat-value" id="stat-images">–</div>
+          <div class="stat-desc" id="stat-processed">–</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Detections</div>
+          <div class="stat-value" id="stat-waste">–</div>
+          <div class="stat-desc" id="stat-avg-waste">–</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Label Breakdown</div>
+          <div class="stat-value" id="stat-breakdown">–</div>
+          <div class="stat-desc" id="stat-conf">–</div>
+        </div>
+      </section>
+
+      <section id="results-section">
+        <h2 class="section-title">Results</h2>
+        <div id="gallery" class="gallery"></div>
+      </section>
+
+      <section id="page-settings" class="panel hidden">
+        <h2 class="section-title">Settings</h2>
+        <div class="settings-grid">
+          <div class="field">
+            <label for="set-clean-max">Clean if items ≤</label>
+            <input id="set-clean-max" type="number" min="0" max="100" value="1" />
+          </div>
+          <div class="field">
+            <label for="set-medium-max">Medium if items ≤</label>
+            <input id="set-medium-max" type="number" min="0" max="100" value="5" />
+          </div>
+          <div class="field">
+            <label for="set-penalty">Score drop per item (%)</label>
+            <input id="set-penalty" type="number" min="0" max="100" step="1" value="10" />
+          </div>
+          <div class="field">
+            <label for="set-overall-clean">Overall label: Clean if score ≥</label>
+            <input id="set-overall-clean" type="number" min="0" max="100" step="1" value="80" />
+          </div>
+          <div class="field">
+            <label for="set-overall-medium">Overall label: Medium if score ≥</label>
+            <input id="set-overall-medium" type="number" min="0" max="100" step="1" value="40" />
+          </div>
+          <div class="field inline">
+            <input id="set-draw-boxes" type="checkbox" checked />
+            <label for="set-draw-boxes">Draw boxes on images</label>
+          </div>
+          <div class="field">
+            <label for="set-default-minconf">Default send boxes at least</label>
+            <input id="set-default-minconf" type="number" min="0" max="1" step="0.01" value="0.10" />
+          </div>
+          <div class="field">
+            <label for="set-default-concurrency">Default how many at once</label>
+            <input id="set-default-concurrency" type="number" min="1" max="20" value="5" />
+          </div>
+        </div>
+        <div class="actions">
+          <button id="settings-save" class="primary" type="button">Save</button>
+          <div id="settings-status" class="status"></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <button id="modal-close" class="modal-close" aria-label="Close">×</button>
+        <div class="modal-body">
+          <div class="modal-image-wrapper">
+            <img id="modal-image" alt="Selected beach" />
+            <canvas id="modal-canvas"></canvas>
+          </div>
+          <div id="modal-details" class="modal-details"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/app.js" defer></script>
+  </body>
+  </html>
