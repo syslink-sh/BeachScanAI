@@ -1,5 +1,4 @@
 (() => {
-  console.log('English app.js loaded');
   const form = document.getElementById('analyze-form');
   const pageScan = document.getElementById('page-scan');
   const pageSettings = document.getElementById('page-settings');
@@ -412,23 +411,11 @@
 
   // Language toggle
   setTimeout(() => {
-    const languageSelect = document.getElementById('language-select');
-    if (languageSelect) {
-      console.log('Language select found, initializing to en');
-      // Initialize language select based on current page
-      languageSelect.value = 'en';
-      languageSelect.addEventListener('change', () => {
-        const lang = languageSelect.value;
-        console.log('Language changed to:', lang);
-        document.cookie = `lang=${lang}; path=/; max-age=31536000`; // 1 year
-        if (lang === 'ar') {
-          window.location.href = '/ar/index.html';
-        } else {
-          window.location.href = '/index.html';
-        }
+    const languageBtn = document.getElementById('language-btn');
+    if (languageBtn) {
+      languageBtn.addEventListener('click', () => {
+        window.location.href = '/ar/index.html';
       });
-    } else {
-      console.log('Language select not found');
     }
   }, 100);
 })();
