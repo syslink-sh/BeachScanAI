@@ -392,17 +392,17 @@
   applySettingsToUI();
   setActiveTab('scan');
 
-  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggle = document.getElementById('set-theme');
   function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+    if (themeToggle) themeToggle.value = theme;
   }
   const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   setTheme(savedTheme);
-  themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-  });
+  if (themeToggle) {
+    themeToggle.addEventListener('change', () => {
+      setTheme(themeToggle.value);
+    });
+  }
 })();

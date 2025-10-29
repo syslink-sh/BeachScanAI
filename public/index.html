@@ -25,7 +25,6 @@
             <button id="tab-scan" class="tab active" type="button">Scan</button>
             <button id="tab-settings" class="tab" type="button">Settings</button>
           </div>
-          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">🌙</button>
         </div>
       </div>
     </header>
@@ -134,6 +133,13 @@
           <div class="field">
             <label for="set-default-concurrency">Default how many at once</label>
             <input id="set-default-concurrency" type="number" min="1" max="20" value="5" />
+          </div>
+          <div class="field">
+            <label for="set-theme">Theme</label>
+            <select id="set-theme">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
           </div>
         </div>
         <div class="actions">
