@@ -11,7 +11,7 @@ const HOST = process.env.HOST || '0.0.0.0';
 const PORT = Number(process.env.PORT) || 3000;
 const DEFAULT_MIN_CONF = process.env.MIN_CONFIDENCE ? Number(process.env.MIN_CONFIDENCE) : 0.1;
 const ROBOFLOW_API_KEY = process.env.ROBOFLOW_API_KEY || '2EhW06WsZcd91vVV9eal';
-const ROBOFLOW_URL = process.env.ROBOFLOW_URL || 'https://detect.roboflow.com/beach-waste-detection/1';
+const ROBOFLOW_URL = process.env.ROBOFLOW_URL || 'https://serverless.roboflow.com/beachscan/workflows/custom-workflow-6';
 const FETCH_TIMEOUT_MS = Number(process.env.FETCH_TIMEOUT_MS) || 30000;
 app.use((req, res, next) => { res.set('X-Powered-By', 'BeachScanAI'); next(); });
 app.use(express.static(path.join(__dirname, 'public')));
