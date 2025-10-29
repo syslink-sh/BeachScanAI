@@ -1,14 +1,29 @@
 :root {
+  --primary: #38bdf8;
+  --primary-light: #7dd3fc;
+  --primary-dark: #0284c7;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --bg-base: #0a0f1d;
+  --bg-subtle: #151b2d;
+  --bg-emphasis: #1c2439;
   --text-primary: #f1f5f9;
   --text-secondary: #cbd5e1;
   --text-tertiary: #94a3b8;
   --text-inverse: #0f172a;
+  --border-light: #334155;
+  --border-medium: #475569;
+  --border-heavy: #64748b;
   --clean-bg: rgba(52, 211, 153, 0.1);
   --clean-text: #34d399;
   --medium-bg: rgba(251, 191, 36, 0.1);
   --medium-text: #fbbf24;
   --dirty-bg: rgba(248, 113, 113, 0.1);
   --dirty-text: #f87171;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --container-max: 1280px;
   --header-height: 64px;
   --radius-sm: 4px;
@@ -356,6 +371,15 @@ textarea { min-height: 100px; resize: vertical; }
 }
 .label.medium {
   color: var(--medium-text);
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  border-top: 1px solid var(--border-light);
 }
 .label.medium::before {
   background: var(--medium-text);
