@@ -31,8 +31,6 @@
   const setDrawBoxes = document.getElementById('set-draw-boxes');
   const setDefaultMinConf = document.getElementById('set-default-minconf');
   const setDefaultConcurrency = document.getElementById('set-default-concurrency');
-  const themeToggle = document.getElementById('set-theme');
-  const themeBtn = document.getElementById('theme-toggle');
   let previewUrls = []; 
   let lastResults = null;
   let viewResults = null; 
@@ -408,32 +406,14 @@
   applySettingsToUI();
   setActiveTab('scan');
 
-  function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-    if (themeToggle) themeToggle.value = theme;
-    if (themeBtn) themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
-    if (themeBtn) themeBtn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-  }
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
-    const newTheme = current === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-  }
-  const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-  setTheme(savedTheme);
-  if (themeToggle) {
-    themeToggle.addEventListener('change', () => {
-      setTheme(themeToggle.value);
-    });
-  }
-  if (themeBtn) {
-    themeBtn.addEventListener('click', toggleTheme);
-  }
+  // Set theme to always dark
+  document.documentElement.setAttribute('data-theme', 'dark');
 
   // Language toggle
   const languageSelect = document.getElementById('language-select');
   if (languageSelect) {
+    // Initialize language select based on current page
+    languageSelect.value = 'en';
     languageSelect.addEventListener('change', () => {
       const lang = languageSelect.value;
       document.cookie = `lang=${lang}; path=/; max-age=31536000`; // 1 year
