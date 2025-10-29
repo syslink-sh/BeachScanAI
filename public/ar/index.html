@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,19 +11,19 @@
       <div class="hero">
         <div class="hero-content">
           <h1>BeachScanAI</h1>
-          <p class="subtitle">Advanced AI-powered beach cleanliness analysis. Fast, accurate, and continuously improving.</p>
+          <p class="subtitle">تحليل نظافة الشواطئ المتقدم بالذكاء الاصطناعي. سريع، دقيق، ويحسن باستمرار.</p>
           <div class="feature-banner">
             <span class="badge">AI</span>
-            <span class="text">Our AI models are continuously learning and improving over time</span>
+            <span class="text">نماذجنا الذكية تتعلم وتتحسن باستمرار مع الوقت</span>
           </div>
           <ul class="steps">
-            <li><span>1</span> Upload photos</li>
-            <li><span>2</span> We find trash</li>
-            <li><span>3</span> See the score</li>
+            <li><span>1</span> رفع الصور</li>
+            <li><span>2</span> نجد القمامة</li>
+            <li><span>3</span> رؤية النتيجة</li>
           </ul>
           <div class="tabs">
-            <button id="tab-scan" class="tab active" type="button">Scan</button>
-            <button id="tab-settings" class="tab" type="button">Settings</button>
+            <button id="tab-scan" class="tab active" type="button">مسح</button>
+            <button id="tab-settings" class="tab" type="button">الإعدادات</button>
           </div>
         </div>
       </div>
@@ -33,15 +33,15 @@
       <section id="page-scan" class="panel callout">
         <form id="analyze-form">
           <div class="field">
-            <label for="file-input">Upload Images</label>
-            <div id="dropzone" class="dropzone" tabindex="0" aria-label="Drop images here or click to choose">
+            <label for="file-input">رفع الصور</label>
+            <div id="dropzone" class="dropzone" tabindex="0" aria-label="أسقط الصور هنا أو انقر للاختيار">
               <div class="dropzone-inner">
                 <div class="dropzone-icon">📷</div>
                 <div class="dropzone-text">
-                  <strong>Drag & drop</strong> images here or
-                  <button type="button" id="choose-files" class="file-button">Choose Files</button>
+                  <strong>اسحب وأسقط</strong> الصور هنا أو
+                  <button type="button" id="choose-files" class="file-button">اختر الملفات</button>
                 </div>
-                <div id="file-count" class="file-count">No files selected</div>
+                <div id="file-count" class="file-count">لم يتم اختيار ملفات</div>
               </div>
               <input id="file-input" name="files" type="file" multiple accept="image/*" />
             </div>
@@ -50,7 +50,7 @@
           <div class="field">
             <div class="confidence-slider">
               <div class="confidence-header">
-                <label for="rt-min-confidence">Detection Confidence</label>
+                <label for="rt-min-confidence">ثقة الكشف</label>
                 <div class="rt-value" id="rt-min-confidence-value">0.10</div>
               </div>
               <input id="rt-min-confidence" type="range" min="0" max="1" step="0.01" value="0.1" />
@@ -62,7 +62,7 @@
           <div class="actions">
             <button type="submit" class="analyze-btn">
               <span class="analyze-icon">📊</span>
-              <span class="analyze-text">Analyze Images</span>
+              <span class="analyze-text">تحليل الصور</span>
             </button>
             <div id="status" class="status" aria-live="polite"></div>
           </div>
@@ -70,7 +70,7 @@
       </section>
 
       <section id="results-section">
-        <h2 class="section-title">Results</h2>
+        <h2 class="section-title">النتائج</h2>
         <div id="gallery" class="gallery"></div>
       </section>
 
@@ -78,88 +78,88 @@
 
       <section id="stats" class="stats hidden">
         <div class="stat">
-          <div class="stat-title">Overall Cleanliness</div>
+          <div class="stat-title">النظافة العامة</div>
           <div class="stat-value" id="stat-cleanliness">–</div>
           <div class="stat-desc" id="stat-overall-label">–</div>
         </div>
         <div class="stat">
-          <div class="stat-title">Images</div>
+          <div class="stat-title">الصور</div>
           <div class="stat-value" id="stat-images">–</div>
           <div class="stat-desc" id="stat-processed">–</div>
         </div>
         <div class="stat">
-          <div class="stat-title">Detections</div>
+          <div class="stat-title">الكشوفات</div>
           <div class="stat-value" id="stat-waste">–</div>
           <div class="stat-desc" id="stat-avg-waste">–</div>
         </div>
         <div class="stat">
-          <div class="stat-title">Label Breakdown</div>
+          <div class="stat-title">توزيع التصنيفات</div>
           <div class="stat-value" id="stat-breakdown">–</div>
           <div class="stat-desc" id="stat-conf">–</div>
         </div>
       </section>
 
       <section id="page-settings" class="panel hidden">
-        <h2 class="section-title">Settings</h2>
-        <p class="settings-intro">Customize how BeachScanAI classifies beach cleanliness based on detected waste items.</p>
+        <h2 class="section-title">الإعدادات</h2>
+        <p class="settings-intro">خصص كيف يصنف BeachScanAI نظافة الشواطئ بناءً على العناصر المكتشفة من القمامة.</p>
         <div class="settings-grid">
           <div class="field">
-            <label for="set-clean-max">Clean threshold (0–X items)</label>
+            <label for="set-clean-max">حد النظافة (0–X عنصر)</label>
             <input id="set-clean-max" type="number" min="0" max="100" value="1" />
-            <small>Beaches with ≤ this many items are labeled "Clean"</small>
+            <small>الشواطئ التي تحتوي على ≤ هذا العدد من العناصر تصنف "نظيفة"</small>
           </div>
           <div class="field">
-            <label for="set-medium-max">Medium threshold (X+1–Y items)</label>
+            <label for="set-medium-max">حد المتوسط (X+1–Y عنصر)</label>
             <input id="set-medium-max" type="number" min="0" max="100" value="5" />
-            <small>Beaches with > clean threshold and ≤ this many items are "Medium Dirty"</small>
+            <small>الشواطئ التي تحتوي على > حد النظافة و ≤ هذا العدد تصنف "متوسطة الاتساخ"</small>
           </div>
           <div class="field">
-            <label for="set-penalty">Score penalty per item (%)</label>
+            <label for="set-penalty">عقوبة النقاط لكل عنصر (%)</label>
             <input id="set-penalty" type="number" min="0" max="100" step="1" value="10" />
-            <small>How much the cleanliness score drops for each detected item</small>
+            <small>كم تنخفض نقاط النظافة لكل عنصر مكتشف</small>
           </div>
           <div class="field">
-            <label for="set-overall-clean">Overall Clean score threshold (%)</label>
+            <label for="set-overall-clean">حد نقاط النظافة العامة (%)</label>
             <input id="set-overall-clean" type="number" min="0" max="100" step="1" value="80" />
-            <small>Average score ≥ this = overall "Clean"</small>
+            <small>المتوسط ≥ هذا = "نظيف" عام</small>
           </div>
           <div class="field">
-            <label for="set-overall-medium">Overall Medium score threshold (%)</label>
+            <label for="set-overall-medium">حد نقاط المتوسط العام (%)</label>
             <input id="set-overall-medium" type="number" min="0" max="100" step="1" value="40" />
-            <small>Average score ≥ this (but < clean) = overall "Medium Dirty"</small>
+            <small>المتوسط ≥ هذا (لكن < نظيف) = "متوسط الاتساخ" عام</small>
           </div>
           <div class="field inline">
             <input id="set-draw-boxes" type="checkbox" checked />
-            <label for="set-draw-boxes">Draw detection boxes on images</label>
+            <label for="set-draw-boxes">رسم مربعات الكشف على الصور</label>
           </div>
           <div class="field">
-            <label for="set-default-minconf">Minimum detection confidence</label>
+            <label for="set-default-minconf">الحد الأدنى لثقة الكشف</label>
             <input id="set-default-minconf" type="number" min="0" max="1" step="0.01" value="0.10" />
-            <small>Only count detections with ≥ this confidence (0.00–1.00)</small>
+            <small>احتساب الكشوفات التي ≥ هذه الثقة فقط (0.00–1.00)</small>
           </div>
           <div class="field">
-            <label for="set-default-concurrency">Concurrent processing limit</label>
+            <label for="set-default-concurrency">حد المعالجة المتزامنة</label>
             <input id="set-default-concurrency" type="number" min="1" max="20" value="5" />
-            <small>How many images to analyze at once (1–20)</small>
+            <small>كم صورة تحلل في وقت واحد (1–20)</small>
           </div>
           <div class="field">
-            <label for="set-theme">Theme</label>
+            <label for="set-theme">المظهر</label>
             <select id="set-theme">
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
+              <option value="light">فاتح</option>
+              <option value="dark">داكن</option>
             </select>
           </div>
         </div>
         <div class="classification-preview">
-          <h3>Current Classification Ranges</h3>
+          <h3>نطاقات التصنيف الحالية</h3>
           <div class="ranges">
-            <div class="range clean">Clean: 0–<span id="preview-clean-max">1</span> items</div>
-            <div class="range medium">Medium: <span id="preview-clean-max-plus">2</span>–<span id="preview-medium-max">5</span> items</div>
-            <div class="range dirty">Dirty: <span id="preview-medium-max-plus">6</span>+ items</div>
+            <div class="range clean">نظيف: 0–<span id="preview-clean-max">1</span> عنصر</div>
+            <div class="range medium">متوسط: <span id="preview-clean-max-plus">2</span>–<span id="preview-medium-max">5</span> عنصر</div>
+            <div class="range dirty">متسخ: <span id="preview-medium-max-plus">6</span>+ عنصر</div>
           </div>
         </div>
         <div class="actions">
-          <button id="settings-save" class="primary" type="button">Save Settings</button>
+          <button id="settings-save" class="primary" type="button">حفظ الإعدادات</button>
           <div id="settings-status" class="status"></div>
         </div>
       </section>
@@ -167,10 +167,10 @@
 
     <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
       <div class="modal-content">
-        <button id="modal-close" class="modal-close" aria-label="Close">×</button>
+        <button id="modal-close" class="modal-close" aria-label="إغلاق">×</button>
         <div class="modal-body">
           <div class="modal-image-wrapper">
-            <img id="modal-image" alt="Selected beach" />
+            <img id="modal-image" alt="الشاطئ المختار" />
             <canvas id="modal-canvas"></canvas>
           </div>
           <div id="modal-details" class="modal-details"></div>
@@ -179,12 +179,12 @@
     </div>
 
     <footer class="footer">
-      <p>Made by <strong>Faisal Alsharif</strong> for <strong>Mawhiba Competition (Ibdaa) إبداع</strong></p>
+      <p>صنع بواسطة <strong>فيصل الشريف</strong> لمسابقة <strong>موهبة (إبداع) Mawhiba</strong></p>
       <div class="language-toggle">
-        <label for="language-select">Language:</label>
+        <label for="language-select">اللغة:</label>
         <select id="language-select">
           <option value="en">English</option>
-          <option value="ar">العربية</option>
+          <option value="ar" selected>العربية</option>
         </select>
       </div>
     </footer>
