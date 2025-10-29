@@ -1,4 +1,5 @@
 (() => {
+  console.log('English app.js loaded');
   const form = document.getElementById('analyze-form');
   const pageScan = document.getElementById('page-scan');
   const pageSettings = document.getElementById('page-settings');
@@ -410,7 +411,7 @@
   document.documentElement.setAttribute('data-theme', 'dark');
 
   // Language toggle
-  document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
     const languageSelect = document.getElementById('language-select');
     if (languageSelect) {
       console.log('Language select found, initializing to en');
@@ -429,5 +430,5 @@
     } else {
       console.log('Language select not found');
     }
-  });
+  }, 100);
 })();
