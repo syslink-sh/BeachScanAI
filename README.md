@@ -1,68 +1,29 @@
-# BeachScanAI
+# BeachScanAI - Ibdaa Competition Project
 
-BeachScanAI is a full‑stack app to analyze beach images with Roboflow and summarize overall cleanliness.
+## Overview
+BeachScanAI is an innovative AI-powered application designed to revolutionize beach cleanliness monitoring. By leveraging advanced computer vision and machine learning technologies, our solution automatically analyzes beach images to detect and quantify waste, providing real-time insights into environmental health.
 
-## Quick start
+## The Problem
+Beaches worldwide face increasing pollution challenges, with plastic waste and debris impacting marine ecosystems and tourism. Traditional monitoring methods are time-consuming, costly, and often inaccurate. BeachScanAI addresses this critical need with an automated, scalable solution.
 
-1. Requirements: Node.js 18+
-2. Install deps: `npm install`
-3. Set environment (optional): create `.env` with `ROBOFLOW_API_KEY=your_key`. Defaults to the provided key.
-4. Run: `npm start`
-5. Open: http://localhost:3000
+## Our Solution
+Our application allows users to upload beach photos or provide image URLs, and instantly receives detailed analysis including:
+- Detection of waste items with high accuracy
+- Cleanliness scoring on a scale from Clean to Dirty
+- Visual bounding boxes highlighting detected waste
+- Comprehensive summary reports for multiple images
 
-### Access from other devices on your LAN
+## Key Features
+- **AI-Powered Detection**: Utilizes state-of-the-art Roboflow models for precise waste identification
+- **Multi-Image Processing**: Handles batch uploads for efficient large-scale monitoring
+- **Real-Time Analysis**: Provides instant results with customizable confidence thresholds
+- **User-Friendly Interface**: Intuitive web application accessible from any device
+- **Environmental Impact**: Supports conservation efforts by enabling data-driven cleanup strategies
 
-By default the server binds to 0.0.0.0 so other devices on the same local network can connect. After starting the app you'll see one or more LAN addresses printed in the console, for example:
+## Innovation & Impact
+BeachScanAI represents a breakthrough in environmental monitoring technology, combining artificial intelligence with practical application to create measurable positive change. By making beach assessment fast, accurate, and accessible, we empower communities, governments, and organizations to take proactive steps in protecting our coastal environments.
 
-  BeachScanAI available at http://192.168.1.42:3000
+## Vision
+To become the global standard for automated beach cleanliness assessment, contributing to cleaner oceans and sustainable tourism through technology-driven environmental stewardship.
 
-Open that URL from another device (phone, tablet, laptop) on the same Wi‑Fi/router. To restrict the server to localhost only, set HOST=127.0.0.1 before running.
-
-## Features
-
-- Upload many images and/or paste URLs
-- Runs several at once (you choose)
-- Simple labels: Clean / Medium Dirty / Dirty
-- Boxes on images (can turn off)
-- Easy Settings to change judging
-
-## API
-
-POST `/analyze` accepts `multipart/form-data` with:
-
-- `files`: one or more image files
-- `urls`: JSON array or newline/comma‑separated URLs
-- `concurrency` (optional): number, default 5, max 20
-- `minConfidence` (optional): 0–1
-- `settings` (optional): JSON string with judging settings
-
-Response:
-
-```json
-{
-  "summary": {
-    "totalImages": 12,
-    "processed": 12,
-    "failed": 0,
-    "totalWasteItems": 34,
-    "averageCleanlinessPercent": 72,
-    "overallLabel": "Medium Dirty"
-  },
-  "results": [
-    {
-      "index": 0,
-      "source": "https://.../image.jpg",
-      "boxes": [ { "x": 10, "y": 20, "width": 50, "height": 40, "label": "waste", "confidence": 0.88 } ],
-      "wasteCount": 3,
-      "confidences": [0.88, 0.76, 0.91],
-      "imageLabel": "Medium Dirty",
-      "cleanlinessPercent": 70
-    }
-  ]
-}
-```
-
-Notes:
-
-- For file uploads, images are sent to Roboflow as base64 (`type: "base64"`). For URLs, they are sent as URL (`type: "url"`).
-- Default scoring: each item -10%. 0–1 → Clean, 2–5 → Medium Dirty, 6+ → Dirty. You can change these in Settings.
+*This project is proudly submitted for the Ibdaa Competition in Mawhiba.*
