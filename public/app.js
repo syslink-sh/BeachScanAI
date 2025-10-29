@@ -408,14 +408,4 @@
 
   // Set theme to always dark
   document.documentElement.setAttribute('data-theme', 'dark');
-
-  // Language toggle
-  setTimeout(() => {
-    const languageBtn = document.getElementById('language-btn');
-    if (languageBtn) {
-      languageBtn.addEventListener('click', () => {
-        window.location.href = '/ar/index.html';
-      });
-    }
-  }, 100);
 })();
