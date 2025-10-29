@@ -210,17 +210,27 @@
     results.forEach((r, idx) => {
       const src = previewUrls[r.index] || previewUrls[idx];
       const div = document.createElement('div');
-      div.className = 'card';
+      div.className = 'result-item';
       div.dataset.index = String(r.index);
-      const badge = r.error ? 'Error' : `${r.cleanlinessPercent ?? '—'}% clean`;
+
+      const cleanlinessPercent = r.cleanlinessPercent ?? 0;
+      const badge = r.error ? 'Error' : `${cleanlinessPercent}% clean`;
+      const badgeClass = r.error ? 'error' : (cleanlinessPercent >= 80 ? 'clean' : cleanlinessPercent >= 40 ? 'medium' : 'dirty');
+
       div.innerHTML = `
         <div style="position:relative">
-          <span class="badge">${badge}</span>
-          <img class="thumb" src="${src}" alt="Beach image ${r.index + 1}" />
+          <span class="result-badge ${badgeClass}">${badge}</span>
+          <img class="result-image" src="${src}" alt="Beach image ${r.index + 1}" loading="lazy" />
         </div>
-        <div class="card-body">
-          ${r.error ? `<span class="label dirty">Error</span>` : `<span class="label ${labelClass(r.imageLabel)}">${r.imageLabel}</span>`}
-          <span class="muted">${r.error ? r.error : `${r.wasteCount} items`}</span>
+        <div class="result-details">
+          <div class="result-label">${r.error ? 'Error' : r.imageLabel || 'Unknown'}</div>
+          <div class="result-meta">
+            ${r.error ?
+              `<span class="error-text">${r.error}</span>` :
+              `<span class="waste-count">${r.wasteCount} waste items detected</span>`
+            }
+          </div>
+          ${!r.error ? `<div class="confidence-info">AI Confidence: ${r.confidences && r.confidences.length > 0 ? `${(r.confidences.reduce((a,b)=>a+b,0)/r.confidences.length * 100).toFixed(1)}%` : 'N/A'}</div>` : ''}
         </div>
       `;
       div.addEventListener('click', () => openModal(r, src));
