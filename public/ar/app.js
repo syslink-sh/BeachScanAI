@@ -134,7 +134,7 @@
     viewResults = null;
     const files = Array.from(fileInput.files || []);
     if (files.length === 0) {
-      statusEl.textContent = 'Please upload some images.';
+      statusEl.textContent = 'يرجى رفع بعض الصور.';
       return;
     }
     files.forEach(f => previewUrls.push(URL.createObjectURL(f)));
@@ -145,7 +145,7 @@
     if (!Number.isNaN(minConf)) fd.append('minConfidence', String(minConf));
     fd.append('settings', JSON.stringify(SETTINGS));
     files.forEach(f => fd.append('files', f));
-    statusEl.textContent = 'Analyzing... this may take a while for many images';
+    statusEl.textContent = 'جاري التحليل... قد يستغرق وقتاً طويلاً للعديد من الصور';
     try {
       const resp = await fetch('/analyze', {
         method: 'POST',
@@ -164,9 +164,9 @@
       renderSummary(derivedSummary);
       renderStats(derivedSummary, viewResults);
       renderGallery(viewResults);
-      statusEl.textContent = 'Done';
+      statusEl.textContent = 'تم';
     } catch (err) {
-      statusEl.textContent = 'Error: ' + (err.message || String(err));
+      statusEl.textContent = 'خطأ: ' + (err.message || String(err));
     }
   }
   function getRtMinConfidence() {
@@ -183,7 +183,7 @@
     summary.classList.remove('hidden');
     const duration = s.durationMs ? `${(s.durationMs/1000).toFixed(1)}s` : '—';
     summary.innerHTML = `
-      <strong>Overview</strong> · ${new Date(s.startedAt || Date.now()).toLocaleString()} · Duration ${duration}
+      <strong>نظرة عامة</strong> · ${new Date(s.startedAt || Date.now()).toLocaleString()} · المدة ${duration}
     `;
   }
   function renderStats(s, results) {
@@ -197,12 +197,12 @@
     document.getElementById('stat-cleanliness').textContent = `${s.averageCleanlinessPercent ?? '–'}%`;
     document.getElementById('stat-overall-label').textContent = s.overallLabel ?? '—';
     document.getElementById('stat-images').textContent = `${s.totalImages ?? results.length}`;
-    document.getElementById('stat-processed').textContent = `Processed ${processed} · Failed ${failed}`;
+    document.getElementById('stat-processed').textContent = `تم معالجة ${processed} · فشل ${failed}`;
     document.getElementById('stat-waste').textContent = `${s.totalWasteItems ?? 0}`;
-    document.getElementById('stat-avg-waste').textContent = `Avg ${avgWaste.toFixed(2)} per image`;
-    const conf = s.averageConfidencePercent != null ? `${s.averageConfidencePercent}% avg conf` : 'avg conf —';
-    const minC = typeof s.minConfidence === 'number' ? ` · min conf ${Math.round(s.minConfidence*100)}%` : '';
-    document.getElementById('stat-breakdown').textContent = `Clean ${clean} · Medium ${medium} · Dirty ${dirty}`;
+    document.getElementById('stat-avg-waste').textContent = `متوسط ${avgWaste.toFixed(2)} لكل صورة`;
+    const conf = s.averageConfidencePercent != null ? `${s.averageConfidencePercent}% متوسط الثقة` : 'متوسط الثقة —';
+    const minC = typeof s.minConfidence === 'number' ? ` · حد أدنى الثقة ${Math.round(s.minConfidence*100)}%` : '';
+    document.getElementById('stat-breakdown').textContent = `نظيف ${clean} · متوسط ${medium} · متسخ ${dirty}`;
     document.getElementById('stat-conf').textContent = conf + minC;
   }
   function renderGallery(results) {
@@ -212,15 +212,15 @@
       const div = document.createElement('div');
       div.className = 'card';
       div.dataset.index = String(r.index);
-      const badge = r.error ? 'Error' : `${r.cleanlinessPercent ?? '—'}% clean`;
+      const badge = r.error ? 'خطأ' : `${r.cleanlinessPercent ?? '—'}% نظيف`;
       div.innerHTML = `
         <div style="position:relative">
           <span class="badge">${badge}</span>
           <img class="thumb" src="${src}" alt="Beach image ${r.index + 1}" />
         </div>
         <div class="card-body">
-          ${r.error ? `<span class="label dirty">Error</span>` : `<span class="label ${labelClass(r.imageLabel)}">${r.imageLabel}</span>`}
-          <span class="muted">${r.error ? r.error : `${r.wasteCount} items`}</span>
+          ${r.error ? `<span class="label dirty">خطأ</span>` : `<span class="label ${labelClass(r.imageLabel)}">${r.imageLabel}</span>`}
+          <span class="muted">${r.error ? r.error : `${r.wasteCount} عنصر`}</span>
         </div>
       `;
       div.addEventListener('click', () => openModal(r, src));
@@ -277,16 +277,16 @@
     };
   }
   function classifyByCountWithSettings(count, thresholds) {
-    if (count <= (thresholds?.cleanMax ?? 1)) return 'Clean';
-    if (count <= (thresholds?.mediumMax ?? 5)) return 'Medium Dirty';
-    return 'Dirty';
+    if (count <= (thresholds?.cleanMax ?? 1)) return 'نظيف';
+    if (count <= (thresholds?.mediumMax ?? 5)) return 'متوسط الاتساخ';
+    return 'متسخ';
   }
   function overallLabelFromPercentWithSettings(p, overall) {
     const cleanMin = overall?.cleanMinPercent ?? 80;
     const medMin = overall?.mediumMinPercent ?? 40;
-    if (p >= cleanMin) return 'Clean';
-    if (p >= medMin) return 'Medium Dirty';
-    return 'Dirty';
+    if (p >= cleanMin) return 'نظيف';
+    if (p >= medMin) return 'متوسط الاتساخ';
+    return 'متسخ';
   }
   function openModal(result, src) {
     modal.classList.remove('hidden');
@@ -371,7 +371,7 @@
     SETTINGS = collectSettingsFromUI();
     saveSettings(SETTINGS);
     applySettingsToUI();
-    settingsStatus.textContent = 'Saved';
+    settingsStatus.textContent = 'تم الحفظ';
     setTimeout(() => { settingsStatus.textContent = ''; }, 1200);
   });
   if (setCleanMax) setCleanMax.addEventListener('input', updateClassificationPreview);
@@ -379,7 +379,7 @@
   if (chooseBtn) chooseBtn.addEventListener('click', () => fileInput?.click());
   function updateFileCount() {
     const files = Array.from(fileInput.files || []);
-    fileCount.textContent = files.length ? `${files.length} file(s) selected` : 'No files selected';
+    fileCount.textContent = files.length ? `${files.length} ملف(ات) محددة` : 'لم يتم اختيار ملفات';
   }
   fileInput.addEventListener('change', updateFileCount);
   ['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover'); }));
