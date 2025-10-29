@@ -407,16 +407,41 @@
   setActiveTab('scan');
 
   const themeToggle = document.getElementById('set-theme');
+  const themeBtn = document.getElementById('theme-toggle');
   function setTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
     if (themeToggle) themeToggle.value = theme;
+    if (themeBtn) themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    if (themeBtn) themeBtn.title = theme === 'dark' ? 'التبديل إلى الوضع الفاتح' : 'التبديل إلى الوضع الداكن';
+  }
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
   }
   const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   setTheme(savedTheme);
   if (themeToggle) {
     themeToggle.addEventListener('change', () => {
       setTheme(themeToggle.value);
+    });
+  }
+  if (themeBtn) {
+    themeBtn.addEventListener('click', toggleTheme);
+  }
+
+  // Language toggle
+  const languageSelect = document.getElementById('language-select');
+  if (languageSelect) {
+    languageSelect.addEventListener('change', () => {
+      const lang = languageSelect.value;
+      document.cookie = `lang=${lang}; path=/; max-age=31536000`; // 1 year
+      if (lang === 'ar') {
+        window.location.href = '/ar/index.html';
+      } else {
+        window.location.href = '/index.html';
+      }
     });
   }
 })();
