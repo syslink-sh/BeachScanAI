@@ -410,18 +410,24 @@
   document.documentElement.setAttribute('data-theme', 'dark');
 
   // Language toggle
-  const languageSelect = document.getElementById('language-select');
-  if (languageSelect) {
-    // Initialize language select based on current page
-    languageSelect.value = 'en';
-    languageSelect.addEventListener('change', () => {
-      const lang = languageSelect.value;
-      document.cookie = `lang=${lang}; path=/; max-age=31536000`; // 1 year
-      if (lang === 'ar') {
-        window.location.href = '/ar/index.html';
-      } else {
-        window.location.href = '/index.html';
-      }
-    });
-  }
+  document.addEventListener('DOMContentLoaded', () => {
+    const languageSelect = document.getElementById('language-select');
+    if (languageSelect) {
+      console.log('Language select found, initializing to en');
+      // Initialize language select based on current page
+      languageSelect.value = 'en';
+      languageSelect.addEventListener('change', () => {
+        const lang = languageSelect.value;
+        console.log('Language changed to:', lang);
+        document.cookie = `lang=${lang}; path=/; max-age=31536000`; // 1 year
+        if (lang === 'ar') {
+          window.location.href = '/ar/index.html';
+        } else {
+          window.location.href = '/index.html';
+        }
+      });
+    } else {
+      console.log('Language select not found');
+    }
+  });
 })();
